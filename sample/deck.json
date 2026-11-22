@@ -1,0 +1,863 @@
+{
+ "version": "sample",
+ "items": [
+  {
+   "id": "kobun-1",
+   "deck": "kobun",
+   "chapterId": "kobun-ch1",
+   "no": 1,
+   "word": "あはれなり",
+   "kanji": "哀れなり",
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "しみじみとした趣がある"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kobun-2",
+   "deck": "kobun",
+   "chapterId": "kobun-ch1",
+   "no": 2,
+   "word": "をかし",
+   "kanji": null,
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "趣がある",
+      "かわいらしい"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kobun-3",
+   "deck": "kobun",
+   "chapterId": "kobun-ch1",
+   "no": 3,
+   "word": "いと",
+   "kanji": null,
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "たいそう",
+      "とても"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kobun-4",
+   "deck": "kobun",
+   "chapterId": "kobun-ch1",
+   "no": 4,
+   "word": "うつくし",
+   "kanji": "美し",
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "かわいらしい"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kobun-5",
+   "deck": "kobun",
+   "chapterId": "kobun-ch1",
+   "no": 5,
+   "word": "ありがたし",
+   "kanji": "有り難し",
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "めったにない"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kobun-6",
+   "deck": "kobun",
+   "chapterId": "kobun-ch1",
+   "no": 6,
+   "word": "あさまし",
+   "kanji": "浅まし",
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "驚きあきれるほどだ"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kobun-7",
+   "deck": "kobun",
+   "chapterId": "kobun-ch1",
+   "no": 7,
+   "word": "やがて",
+   "kanji": null,
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "すぐに",
+      "そのまま"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kobun-8",
+   "deck": "kobun",
+   "chapterId": "kobun-ch1",
+   "no": 8,
+   "word": "つとめて",
+   "kanji": null,
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "早朝",
+      "翌朝"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kobun-9",
+   "deck": "kobun",
+   "chapterId": "kobun-ch1",
+   "no": 9,
+   "word": "いみじ",
+   "kanji": null,
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "はなはだしい",
+      "すばらしい"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kobun-10",
+   "deck": "kobun",
+   "chapterId": "kobun-ch1",
+   "no": 10,
+   "word": "おどろく",
+   "kanji": "驚く",
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "はっと気づく",
+      "目を覚ます"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kobun-11",
+   "deck": "kobun",
+   "chapterId": "kobun-ch2",
+   "no": 11,
+   "word": "ゆかし",
+   "kanji": null,
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "見たい",
+      "知りたい"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kobun-12",
+   "deck": "kobun",
+   "chapterId": "kobun-ch2",
+   "no": 12,
+   "word": "なでふ",
+   "kanji": null,
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "どうして",
+      "なんという"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kobun-13",
+   "deck": "kobun",
+   "chapterId": "kobun-ch2",
+   "no": 13,
+   "word": "かなし",
+   "kanji": "悲し・愛し",
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "いとしい",
+      "悲しい"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kobun-14",
+   "deck": "kobun",
+   "chapterId": "kobun-ch2",
+   "no": 14,
+   "word": "めでたし",
+   "kanji": "愛でたし",
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "すばらしい"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kobun-15",
+   "deck": "kobun",
+   "chapterId": "kobun-ch2",
+   "no": 15,
+   "word": "わろし",
+   "kanji": "悪し",
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "よくない"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kobun-16",
+   "deck": "kobun",
+   "chapterId": "kobun-ch2",
+   "no": 16,
+   "word": "ねんず",
+   "kanji": "念ず",
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "我慢する",
+      "祈る"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kobun-17",
+   "deck": "kobun",
+   "chapterId": "kobun-ch2",
+   "no": 17,
+   "word": "あやし",
+   "kanji": "怪し",
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "不思議だ",
+      "身分が低い"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kobun-18",
+   "deck": "kobun",
+   "chapterId": "kobun-ch2",
+   "no": 18,
+   "word": "いたづらなり",
+   "kanji": "徒なり",
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "むなしい",
+      "無駄だ"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kobun-19",
+   "deck": "kobun",
+   "chapterId": "kobun-ch2",
+   "no": 19,
+   "word": "すさまじ",
+   "kanji": null,
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "興ざめだ"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kobun-20",
+   "deck": "kobun",
+   "chapterId": "kobun-ch2",
+   "no": 20,
+   "word": "つれづれなり",
+   "kanji": "徒然なり",
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "することがなくて退屈だ"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kobun-21",
+   "deck": "kobun",
+   "chapterId": "kobun-ch3",
+   "no": 21,
+   "word": "のたまふ",
+   "kanji": "宣ふ",
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "おっしゃる"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kobun-22",
+   "deck": "kobun",
+   "chapterId": "kobun-ch3",
+   "no": 22,
+   "word": "おぼす",
+   "kanji": "思す",
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "お思いになる"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kobun-23",
+   "deck": "kobun",
+   "chapterId": "kobun-ch3",
+   "no": 23,
+   "word": "まゐる",
+   "kanji": "参る",
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "参上する",
+      "差し上げる"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kobun-24",
+   "deck": "kobun",
+   "chapterId": "kobun-ch3",
+   "no": 24,
+   "word": "さぶらふ",
+   "kanji": "候ふ",
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "お仕えする",
+      "あります"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kobun-25",
+   "deck": "kobun",
+   "chapterId": "kobun-ch3",
+   "no": 25,
+   "word": "心にくし",
+   "kanji": null,
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "奥ゆかしい"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kanbun-1",
+   "deck": "kanbun",
+   "chapterId": "kanbun-ch1",
+   "no": 1,
+   "word": "以",
+   "kanji": "もって",
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "〜によって",
+      "〜を用いて"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kanbun-2",
+   "deck": "kanbun",
+   "chapterId": "kanbun-ch1",
+   "no": 2,
+   "word": "於",
+   "kanji": "おいて",
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "〜に",
+      "〜で",
+      "〜より"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kanbun-3",
+   "deck": "kanbun",
+   "chapterId": "kanbun-ch1",
+   "no": 3,
+   "word": "而",
+   "kanji": "しかうして",
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "そして",
+      "しかし"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kanbun-4",
+   "deck": "kanbun",
+   "chapterId": "kanbun-ch1",
+   "no": 4,
+   "word": "故",
+   "kanji": "ゆゑ",
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "理由",
+      "だから"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kanbun-5",
+   "deck": "kanbun",
+   "chapterId": "kanbun-ch1",
+   "no": 5,
+   "word": "蓋",
+   "kanji": "けだし",
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "思うに"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kanbun-6",
+   "deck": "kanbun",
+   "chapterId": "kanbun-ch1",
+   "no": 6,
+   "word": "嘗",
+   "kanji": "かつて",
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "以前",
+      "かつて"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kanbun-7",
+   "deck": "kanbun",
+   "chapterId": "kanbun-ch1",
+   "no": 7,
+   "word": "遂",
+   "kanji": "つひに",
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "とうとう"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kanbun-8",
+   "deck": "kanbun",
+   "chapterId": "kanbun-ch1",
+   "no": 8,
+   "word": "寧",
+   "kanji": "むしろ",
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "いっそ"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kanbun-9",
+   "deck": "kanbun",
+   "chapterId": "kanbun-ch2",
+   "no": 9,
+   "word": "豈",
+   "kanji": "あに",
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "どうして〜か"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kanbun-10",
+   "deck": "kanbun",
+   "chapterId": "kanbun-ch2",
+   "no": 10,
+   "word": "雖",
+   "kanji": "いへども",
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "〜ではあるが"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kanbun-11",
+   "deck": "kanbun",
+   "chapterId": "kanbun-ch2",
+   "no": 11,
+   "word": "又",
+   "kanji": "また",
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "さらに"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kanbun-12",
+   "deck": "kanbun",
+   "chapterId": "kanbun-ch2",
+   "no": 12,
+   "word": "即",
+   "kanji": "すなはち",
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "すぐに",
+      "つまり"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kanbun-13",
+   "deck": "kanbun",
+   "chapterId": "kanbun-ch2",
+   "no": 13,
+   "word": "須",
+   "kanji": "すべからく",
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "ぜひ〜すべきだ"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kanbun-14",
+   "deck": "kanbun",
+   "chapterId": "kanbun-ch2",
+   "no": 14,
+   "word": "盍",
+   "kanji": "なんぞ〜ざる",
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "どうして〜しないのか"
+     ]
+    }
+   ],
+   "notes": []
+  },
+  {
+   "id": "kanbun-15",
+   "deck": "kanbun",
+   "chapterId": "kanbun-ch2",
+   "no": 15,
+   "word": "未",
+   "kanji": "いまだ〜ず",
+   "reading": null,
+   "pos": null,
+   "senses": [
+    {
+     "label": null,
+     "meanings": [
+      "まだ〜ない"
+     ]
+    }
+   ],
+   "notes": []
+  }
+ ],
+ "chapters": [
+  {
+   "id": "kobun-ch1",
+   "deck": "kobun",
+   "title": "古文単語 1",
+   "itemIds": [
+    "kobun-1",
+    "kobun-2",
+    "kobun-3",
+    "kobun-4",
+    "kobun-5",
+    "kobun-6",
+    "kobun-7",
+    "kobun-8",
+    "kobun-9",
+    "kobun-10"
+   ]
+  },
+  {
+   "id": "kobun-ch2",
+   "deck": "kobun",
+   "title": "古文単語 2",
+   "itemIds": [
+    "kobun-11",
+    "kobun-12",
+    "kobun-13",
+    "kobun-14",
+    "kobun-15",
+    "kobun-16",
+    "kobun-17",
+    "kobun-18",
+    "kobun-19",
+    "kobun-20"
+   ]
+  },
+  {
+   "id": "kobun-ch3",
+   "deck": "kobun",
+   "title": "古文単語 3",
+   "itemIds": [
+    "kobun-21",
+    "kobun-22",
+    "kobun-23",
+    "kobun-24",
+    "kobun-25"
+   ]
+  },
+  {
+   "id": "kanbun-ch1",
+   "deck": "kanbun",
+   "title": "漢文 1",
+   "itemIds": [
+    "kanbun-1",
+    "kanbun-2",
+    "kanbun-3",
+    "kanbun-4",
+    "kanbun-5",
+    "kanbun-6",
+    "kanbun-7",
+    "kanbun-8"
+   ]
+  },
+  {
+   "id": "kanbun-ch2",
+   "deck": "kanbun",
+   "title": "漢文 2",
+   "itemIds": [
+    "kanbun-9",
+    "kanbun-10",
+    "kanbun-11",
+    "kanbun-12",
+    "kanbun-13",
+    "kanbun-14",
+    "kanbun-15"
+   ]
+  }
+ ]
+}
