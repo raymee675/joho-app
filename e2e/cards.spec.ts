@@ -11,25 +11,25 @@ async function drag(page: Page, dx: number) {
   return async () => { await page.mouse.up(); };
 }
 
-test('カード学習: スワイプで仕分け → 結果 → まだの語だけ', async ({ page }) => {
+test('カード学習: スワイプで仕分け → 結果 → まだの問題だけ', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('link', { name: 'カード', exact: true }).first().click();
   const total = Number((await page.getByTestId('card-progress').innerText()).split('/')[1]);
   expect(total).toBeGreaterThanOrEqual(5);
 
-  // タップで裏返し → ①② と訳
+  // タップで解答と解説を表示
   await page.getByLabel('カードをめくる').click();
   await expect(page.getByTestId('meaning')).toBeVisible();
   await page.screenshot({ path: 'e2e-results/cards-back.png' });
 
-  // 右へドラッグ中は「知ってる」ラベルが出る
+  // 右へドラッグ中は「覚えた」ラベルが出る
   const releaseRight = await drag(page, 120);
   await expect(page.locator('.stamp-ok')).not.toHaveCSS('opacity', '0');
   await page.screenshot({ path: 'e2e-results/cards-dragging.png' });
   await releaseRight();
   await expect(page.getByTestId('card-progress')).toContainText(`2/${total}`);
 
-  // 左へ = 知らない
+  // 左へ = まだ
   const releaseLeft = await drag(page, -150);
   await releaseLeft();
   await expect(page.getByTestId('card-progress')).toContainText(`3/${total}`);
@@ -39,21 +39,21 @@ test('カード学習: スワイプで仕分け → 結果 → まだの語だ�
   await releaseSmall();
   await expect(page.getByTestId('card-progress')).toContainText(`3/${total}`);
 
-  // 残りはボタン: 1 枚だけ「知らない」、他は「知ってる」
-  await page.getByRole('button', { name: '知らない', exact: true }).click();
+  // 残りはボタン: 1 枚だけ「まだ」、他は「覚えた」
+  await page.getByRole('button', { name: 'まだ', exact: true }).click();
   for (let k = 4; k <= total; k++) {
     await expect(page.getByTestId('card-progress')).toContainText(`${k}/${total}`);
-    await page.getByRole('button', { name: '知ってる', exact: true }).click();
+    await page.getByRole('button', { name: '覚えた', exact: true }).click();
   }
-  await expect(page.getByTestId('card-result')).toHaveText(`知ってる ${total - 2} / 知らない 2`);
+  await expect(page.getByTestId('card-result')).toHaveText(`覚えた ${total - 2} / まだ 2`);
   await page.screenshot({ path: 'e2e-results/cards-result.png' });
 
-  await page.getByRole('button', { name: '知らない語だけもう一度' }).click();
+  await page.getByRole('button', { name: 'まだの問題だけもう一度' }).click();
   await expect(page.getByTestId('card-progress')).toContainText('1/2');
-  await page.getByRole('button', { name: '知ってる', exact: true }).click();
+  await page.getByRole('button', { name: '覚えた', exact: true }).click();
   await expect(page.getByTestId('card-progress')).toContainText('2/2');
-  await page.getByRole('button', { name: '知ってる', exact: true }).click();
-  await expect(page.getByTestId('card-result')).toHaveText('知ってる 2 / 知らない 0');
+  await page.getByRole('button', { name: '覚えた', exact: true }).click();
+  await expect(page.getByTestId('card-result')).toHaveText('覚えた 2 / まだ 0');
   await expect(page.getByRole('link', { name: 'この章を 4 択テスト' })).toBeVisible();
 
   // カードでも回答数・連続日数が更新される

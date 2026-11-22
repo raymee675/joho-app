@@ -1,4 +1,4 @@
-// 単色背景に「古」風の簡易マークを描いた PNG を生成する（依存なし）
+// 青い回路チップのアイコン
 import { deflateSync } from 'node:zlib';
 import { writeFileSync } from 'node:fs';
 
@@ -20,10 +20,10 @@ const chunk = (type, data) => {
 };
 
 function png(size) {
-  const bg = [0xf2, 0x6b, 0x0f], fg = [0xff, 0xff, 0xff];
+  const bg = [0x25, 0x63, 0xeb], fg = [0xff, 0xff, 0xff];
   const u = size / 100;
-  // 「古」を矩形で簡略化: 十 + 口
-  const rects = [[20, 28, 60, 8], [46, 12, 8, 40], [30, 56, 40, 8], [30, 56, 8, 28], [62, 56, 8, 28], [30, 76, 40, 8]];
+  // 青い回路チップのアイコン
+  const rects = [[28,28,44,6],[28,66,44,6],[28,28,6,44],[66,28,6,44],[43,43,14,14], ...[35,47,59].flatMap(n=>[[n,18,6,12],[n,70,6,12],[18,n,12,6],[70,n,12,6]])];
   const raw = Buffer.alloc((size * 3 + 1) * size);
   for (let y = 0; y < size; y++) {
     raw[y * (size * 3 + 1)] = 0;

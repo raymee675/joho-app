@@ -23,7 +23,7 @@ export default function App() {
       </main>
       <nav className="tabbar">
         <NavLink to="/" end>ホーム</NavLink>
-        <NavLink to="/list">単語一覧</NavLink>
+        <NavLink to="/list">問題一覧</NavLink>
         <NavLink to="/stats">記録</NavLink>
         <NavLink to="/settings">設定</NavLink>
       </nav>

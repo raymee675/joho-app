@@ -5,7 +5,7 @@ import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 const built = resolve('content/build/deck.json');
-const deckPath = existsSync(built) ? built : resolve('sample/deck.json');
+const deckPath = process.env.JOHO_DECK_PATH ? resolve(process.env.JOHO_DECK_PATH) : existsSync(built) ? built : resolve('sample/deck.json');
 
 export default defineConfig({
   base: './',
@@ -17,12 +17,12 @@ export default defineConfig({
       includeAssets: ['icon.svg', 'apple-touch-icon.png'],
       workbox: { globPatterns: ['**/*.{js,css,html,svg,png,json}'] },
       manifest: {
-        name: '古文・漢文 単語帳',
-        short_name: '古文単語',
+        name: '情報I 一問一答',
+        short_name: '情報I',
         display: 'standalone',
         start_url: './',
-        background_color: '#fff8f1',
-        theme_color: '#f26b0f',
+        background_color: '#f8fafc',
+        theme_color: '#2563eb',
         icons: [
           { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
           { src: 'icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' },

@@ -29,7 +29,7 @@ interface Schema extends DBSchema {
 
 let dbp: Promise<IDBPDatabase<Schema>> | null = null;
 function db() {
-  dbp ??= openDB<Schema>('kobun-app', 2, {
+  dbp ??= openDB<Schema>('joho-app', 2, {
     upgrade(d, oldVersion) {
       if (oldVersion < 1) {
         d.createObjectStore('progress', { keyPath: 'itemId' });

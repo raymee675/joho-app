@@ -14,7 +14,7 @@ beforeEach(async () => {
 const now = new Date(2026, 5, 10, 12).getTime();
 
 describe('ランク', () => {
-  const list = ranksOf('kobun');
+  const list = ranksOf('joho');
   it('合格ラインは 8 割（10 問なら 8 問）', () => {
     expect(passMark(10)).toBe(8);
     expect(isPassed(8, 10)).toBe(true);
@@ -22,9 +22,9 @@ describe('ランク', () => {
     expect(isPassed(0, 0)).toBe(false);
   });
   it('いまのランク = まだクリアしていない最初の章', async () => {
-    expect(currentRank('kobun', new Map())).toBe(list[0]);
+    expect(currentRank('joho', new Map())).toBe(list[0]);
     await clearChapter(list[0].id, 9, now);
-    expect(currentRank('kobun', await getChapterRecords())).toBe(list[1]);
+    expect(currentRank('joho', await getChapterRecords())).toBe(list[1]);
   });
   it('番号・次のランク・出題元から章を取り出す', () => {
     expect(rankNo(list[1].id)).toBe(2);
@@ -32,7 +32,7 @@ describe('ランク', () => {
     expect(nextRank(list[list.length - 1].id)).toBeNull();
     expect(chapterOf(`lv-new-${list[0].id}`)).toBe(list[0].id);
     expect(chapterOf(`weak-${list[0].id}`)).toBe(list[0].id);
-    expect(chapterOf('all-kobun')).toBeNull();
+    expect(chapterOf('all-joho')).toBeNull();
   });
   it('クリア記録は最高点を残し、クリア日は変えない', async () => {
     await clearChapter('c', 8, now);
@@ -75,7 +75,7 @@ describe('学習記録', () => {
   });
   it('v1 の DB から上げても、進み具合が残る', async () => {
     await resetDbConnection();
-    const old = await openDB('kobun-app', 1, {
+    const old = await openDB('joho-app', 1, {
       upgrade(d) {
         d.createObjectStore('progress', { keyPath: 'itemId' });
         d.createObjectStore('days', { keyPath: 'date' });
@@ -93,16 +93,16 @@ describe('学習記録', () => {
 describe('段階ごとの出題元', () => {
   it('lv-<段階>-<範囲> はその段階の語だけ（章・デッキ全体・すべて）', async () => {
     const { loadSource } = await import('../src/source');
-    const ch = ranksOf('kobun')[0];
+    const ch = ranksOf('joho')[0];
     const [a, b] = ch.itemIds;
     await setLevel(a, 3, now);
     await setLevel(b, 2, now);
-    const kanbunId = deck.items.find((i) => i.deck === 'kanbun')!.id;
-    await setLevel(kanbunId, 3, now);
+    const otherId = deck.chapters[1].itemIds[0];
+    await setLevel(otherId, 3, now);
     expect((await loadSource(`lv-mastered-${ch.id}`, now)).items.map((i) => i.id)).toEqual([a]);
     expect((await loadSource(`lv-almost-${ch.id}`, now)).items.map((i) => i.id)).toEqual([b]);
-    expect((await loadSource('lv-mastered-all-kobun', now)).items.map((i) => i.id)).toEqual([a]);
-    expect((await loadSource('lv-mastered-all', now)).items.map((i) => i.id).sort()).toEqual([a, kanbunId].sort());
+    expect((await loadSource('lv-mastered-all-joho', now)).items.map((i) => i.id)).toEqual([a, otherId]);
+    expect((await loadSource('lv-mastered-all', now)).items.map((i) => i.id).sort()).toEqual([a, otherId].sort());
     expect((await loadSource('lv-mastered-all', now)).title).toBe('全体 の覚えた');
   });
 });

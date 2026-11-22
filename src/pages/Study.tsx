@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getSettings, recordAnswer, setKnown } from '../db';
-import { readingOf } from '../quiz';
+import FormattedText from '../components/FormattedText';
 import { loadSource } from '../source';
 import { isTap, judgeSwipe, labelOpacity } from '../swipe';
 import GoalBanner from '../components/GoalBanner';
@@ -9,7 +9,6 @@ import { chapterOf } from '../rank';
 import type { Item } from '../types';
 
 const FLY_MS = 220;
-const CIRCLED = '①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳';
 
 export default function Study() {
   const { chapterId = '' } = useParams();
@@ -52,14 +51,14 @@ function Cards({ chapterId, title, first, hideAnswer }: { chapterId: string; tit
   if (!it) {
     return (
       <div className="page">
-        <h1>{title || '単語カード'}</h1>
+        <h1>{title || '問題カード'}</h1>
         {items.length === 0 ? (
-          <p>単語がありません。</p>
+          <p>問題がありません。</p>
         ) : (
           <>
-            <p className="big" data-testid="card-result">知ってる {known.length} / 知らない {unknown.length}</p>
+            <p className="big" data-testid="card-result">覚えた {known.length} / まだ {unknown.length}</p>
             <GoalBanner />
-            {unknown.length > 0 && <button className="btn primary block" onClick={() => again(unknown)}>知らない語だけもう一度</button>}
+            {unknown.length > 0 && <button className="btn primary block" onClick={() => again(unknown)}>まだの問題だけもう一度</button>}
             {chapterOf(chapterId) && <Link className="btn block" to={`/quiz/${chapterOf(chapterId)}?rankup=1`}>ランクアップテストへ</Link>}
             <Link className="btn block" to={`/quiz/${chapterOf(chapterId) ?? chapterId}`}>この章を 4 択テスト</Link>
           </>
@@ -125,13 +124,13 @@ function SwipeCard({ item, hideAnswer, onVerdict }: { item: Item; hideAnswer: bo
     transform: `translate(${dx}px, ${fly ? 0 : drag.dy * 0.3}px) rotate(${dx / 20}deg)`,
     transition: dragging ? 'none' : `transform ${FLY_MS}ms ease-out`,
   };
-  const reading = readingOf(item);
 
   return (
     <>
       <div
         ref={ref}
         className="flash card swipe"
+        data-item-id={item.id}
         role="button"
         aria-label="カードをめくる"
         aria-expanded={open}
@@ -148,27 +147,19 @@ function SwipeCard({ item, hideAnswer, onVerdict }: { item: Item; hideAnswer: bo
         onPointerUp={onUp}
         onPointerCancel={onCancel}
       >
-        <span className="stamp stamp-ok" style={{ opacity: shownDx > 0 ? labelOpacity(shownDx, w) : 0 }}>知ってる</span>
-        <span className="stamp stamp-ng" style={{ opacity: shownDx < 0 ? labelOpacity(shownDx, w) : 0 }}>知らない</span>
-        <div className="word">{item.word}</div>
-        {item.kanji && <div className="sub">{item.kanji}</div>}
-        {reading && <div className="sub">〔{reading}〕</div>}
+        <span className="stamp stamp-ok" style={{ opacity: shownDx > 0 ? labelOpacity(shownDx, w) : 0 }}>覚えた</span>
+        <span className="stamp stamp-ng" style={{ opacity: shownDx < 0 ? labelOpacity(shownDx, w) : 0 }}>まだ</span>
+        <div className="word"><FormattedText text={item.question} /></div>
         {open ? (
           <div className="answer" data-testid="meaning">
-            {item.senses.map((s, k) => (
-              <p key={k} className="sense">
-                {item.senses.length > 1 && <b>{CIRCLED[k] ?? `${k + 1}.`} </b>}
-                {s.label && <small>{s.label} </small>}
-                {s.meanings.join('、')}
-              </p>
-            ))}
-            {item.notes.map((n, k) => <p key={k} className="note">{n}</p>)}
+            <p className="sense"><FormattedText text={item.answer} /></p>
+            {item.explanation && <p className="note"><FormattedText text={item.explanation} /></p>}
           </div>
-        ) : <div className="hint">タップして意味を見る　←知らない　知ってる→</div>}
+        ) : <div className="hint">タップして解答を見る　←まだ　覚えた→</div>}
       </div>
       <div className="row">
-        <button className="btn" onClick={() => throwCard(false)}>知らない</button>
-        <button className="btn primary" onClick={() => throwCard(true)}>知ってる</button>
+        <button className="btn" onClick={() => throwCard(false)}>まだ</button>
+        <button className="btn primary" onClick={() => throwCard(true)}>覚えた</button>
       </div>
     </>
   );

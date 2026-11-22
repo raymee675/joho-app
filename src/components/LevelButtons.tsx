@@ -3,8 +3,8 @@ import { levelSource } from '../source';
 import { REVIEW_STATUSES, STATUS_LABEL, type StatusCounts } from '../status';
 
 /**
- * 苦手・うろ覚え・ほぼ覚え・覚えた のそれぞれの段階の語だけを出題するボタン。
- * scope は章 ID / 'all-<deck>' / 'all'。query は 4 択テストに付ける追加の条件（漢文の読み問題など）
+ * 苦手・うろ覚え・ほぼ覚え・覚えた のそれぞれの段階の問題だけを出題するボタン。
+ * scope は章 ID / 'all-<deck>' / 'all'。query はテストに付ける追加条件。
  */
 export default function LevelButtons({ counts, scope, query = '', title = '段階ごとに出題' }: {
   counts: StatusCounts;

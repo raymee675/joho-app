@@ -16,7 +16,7 @@ const ORDER = [3, 2, 1, 0] as const;
 
 export interface DayRow { key: string; label: string; answered: number; correct: number; levels: LevelCounts }
 
-/** 直近 span 日の行。段階の語数は、記録の無い日は前の日の値を引き継ぐ */
+/** 直近 span 日の行。段階の問題数は、記録の無い日は前の日の値を引き継ぐ */
 export function lastDays(days: Day[], now: number, span = SPAN): DayRow[] {
   const byKey = new Map(days.map((d) => [d.date, d]));
   const withLevels = days.filter((d) => d.levels).sort((a, b) => a.date.localeCompare(b.date));
@@ -66,7 +66,7 @@ export default function Stats() {
         <div><b data-testid="stats-today">{today.answered}<small>/{goal}</small></b><span>今日の回答</span></div>
         <div><b>{streak}</b><span>日連続</span></div>
         <div><b data-testid="stats-total">{total}</b><span>これまでの回答</span></div>
-        <div><b>{counts.mastered}</b><span>覚えた語</span></div>
+        <div><b>{counts.mastered}</b><span>覚えた問題</span></div>
       </section>
 
       <section className="card chart-card">
@@ -77,7 +77,7 @@ export default function Stats() {
 
       <section className="card chart-card">
         <h2>定着度の推移</h2>
-        <p className="chart-sub">解いたことのある語の、段階ごとの語数（その日の終わり時点）</p>
+        <p className="chart-sub">解いたことのある問題の、段階ごとの問題数（その日の終わり時点）</p>
         <LevelChart rows={rows} hover={hover} setHover={setHover} />
         <ul className="legend inline">
           {ORDER.map((l) => <li key={l}><span><i className={`dot ${LEVEL_CLASS[l]}`} />{LEVEL_NAME[l]}</span></li>)}
@@ -85,19 +85,19 @@ export default function Stats() {
       </section>
 
       <section className="card overview">
-        <h2>全体の学習状況（古文・漢文 {deck.items.length} 語）</h2>
+        <h2>全体の学習状況（情報I {deck.items.length} 問）</h2>
         <StatusPie counts={counts} legend />
-        <LevelButtons counts={counts} scope="all" title="古文・漢文すべてから段階ごとに出題" />
+        <LevelButtons counts={counts} scope="all" title="情報Iすべてから段階ごとに出題" />
       </section>
 
       <section className="card">
         <h2 className="card-title">ランクの進み具合</h2>
-        {(['kobun', 'kanbun'] as const).map((d) => {
+        {(['joho'] as const).map((d) => {
           const list = ranksOf(d);
           const cleared = list.filter((c) => records.has(c.id)).length;
           return (
             <div key={d} className="rank-progress">
-              <span>{d === 'kobun' ? '古文' : '漢文'}</span>
+              <span>情報I</span>
               <div className="rank-steps">{list.map((c) => <i key={c.id} className={records.has(c.id) ? 'done' : ''} title={c.title} />)}</div>
               <b data-testid={`rank-progress-${d}`}>{cleared}/{list.length}</b>
             </div>

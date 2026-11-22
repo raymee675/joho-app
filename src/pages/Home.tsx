@@ -14,7 +14,7 @@ const R = 48;
 const C = 2 * Math.PI * R;
 
 export default function Home() {
-  const [tab, setTab] = useState<DeckName>('kobun');
+  const tab: DeckName = 'joho';
   const [today, setToday] = useState(0);
   const [goal, setGoal] = useState(30);
   const [streak, setStreak] = useState(0);
@@ -43,7 +43,7 @@ export default function Home() {
 
   return (
     <div className="page">
-      <h1>古文・漢文 単語帳</h1>
+      <h1>情報I 一問一答</h1>
       <section className="card stats">
         <div className={`ring${pct >= 100 ? ' done' : ''}`} data-testid="goal-ring" aria-label={`今日の目標 ${pct}%`}>
           <svg width="112" height="112" viewBox="0 0 112 112">
@@ -56,48 +56,42 @@ export default function Home() {
       </section>
       <GoalBanner />
       {weak.length > 0
-        ? <Link className="btn primary block" to="/quiz/review" data-testid="weak-count">苦手の復習（{weak.length} 語）</Link>
-        : <button className="btn block" disabled data-testid="weak-count">苦手な語はありません</button>}
-      <div className="seg">
-        <button className={tab === 'kobun' ? 'on' : ''} onClick={() => setTab('kobun')}>古文</button>
-        <button className={tab === 'kanbun' ? 'on' : ''} onClick={() => setTab('kanbun')}>漢文</button>
-      </div>
+        ? <Link className="btn primary block" to="/quiz/review" data-testid="weak-count">苦手の復習（{weak.length} 問）</Link>
+        : <button className="btn block" disabled data-testid="weak-count">苦手な問題はありません</button>}
       <section className="card rank-card" data-testid="rank">
-        <div className="rank-top"><span>{tab === 'kobun' ? '古文' : '漢文'}のランク</span><span>クリア {ranks.filter((c) => records.has(c.id)).length} / {ranks.length}</span></div>
+        <div className="rank-top"><span>情報Iのランク</span><span>クリア {ranks.filter((c) => records.has(c.id)).length} / {ranks.length}</span></div>
         <div className="rank-steps" aria-hidden>{ranks.map((c) => <i key={c.id} className={records.has(c.id) ? 'done' : c === cur ? 'cur' : ''} />)}</div>
         {cur && curCounts ? (
           <>
             <h2><small>ランク {ranks.indexOf(cur) + 1}</small>{cur.title}</h2>
             <p className="rank-note">
               {curCounts.new > 0
-                ? `① 未学習 ${curCounts.new} 語をカードで仕分け → ② ランクアップテスト`
+                ? `① 未学習 ${curCounts.new} 問題をカードで仕分け → ② ランクアップテスト`
                 : `ランクアップテスト（${Math.min(RANK_TEST_SIZE, cur.itemIds.length)} 問中 ${passMark(Math.min(RANK_TEST_SIZE, cur.itemIds.length))} 問正解で次のランクへ）`}
             </p>
-            {curCounts.new > 0 && <Link className="btn primary block" to={`/study/lv-new-${cur.id}`} data-testid="rank-study">未学習 {curCounts.new} 語をカードで仕分け</Link>}
+            {curCounts.new > 0 && <Link className="btn primary block" to={`/study/lv-new-${cur.id}`} data-testid="rank-study">未学習 {curCounts.new} 問題をカードで仕分け</Link>}
             <Link className={`btn block${curCounts.new > 0 ? '' : ' primary'}`} to={`/quiz/${cur.id}?rankup=1`} data-testid="rank-test">ランクアップテスト</Link>
           </>
         ) : <h2 data-testid="rank-all-clear">すべてのランクをクリアしました 🎉</h2>}
       </section>
       <section className="card overview" data-testid="overview">
-        <h2>{tab === 'kobun' ? '古文' : '漢文'} 全体の学習状況</h2>
+        <h2>情報I 全体の学習状況</h2>
         <StatusPie counts={tabCounts} legend reviewHref={(s) => (REVIEW_STATUSES.includes(s) ? `/quiz/${levelSource(s, `all-${tab}`)}` : null)} />
-        <LevelButtons counts={tabCounts} scope={`all-${tab}`} title={`${tab === 'kobun' ? '古文' : '漢文'}全体から段階ごとに出題`} />
+        <LevelButtons counts={tabCounts} scope={`all-${tab}`} title={`情報I全体から段階ごとに出題`} />
       </section>
-      <Link className="btn block" to={`/quiz/all-${tab}`}>ランダム出題（全{tabIds.length}語）</Link>
+      <Link className="btn block" to={`/quiz/all-${tab}`}>ランダム出題（全{tabIds.length}問）</Link>
       <ul className="chapters">
         {chapters.map((c, i) => {
           const counts = countStatuses(c.itemIds, prog);
-          const section = c.section && c.section !== chapters[i - 1]?.section ? c.section : null;
           return (
             <Fragment key={c.id}>
-              {section && <li className="section-head"><h2>{section}</h2></li>}
               <li className={`card${c === cur ? ' current' : ''}`} data-testid="chapter-card">
                 <div className="ch-main">
                   <StatusPie counts={counts} size={52} />
                   <div className="ch-text">
                     <small className="rank-label">ランク {i + 1}{records.has(c.id) && <span className="clear-badge">クリア</span>}{c === cur && <span className="cur-badge">いまここ</span>}</small>
                     <Link to={`/chapter/${c.id}`}>{c.title}</Link>
-                    <span data-testid="ch-summary">覚えた {counts.mastered} / {c.itemIds.length} 語{counts.weak > 0 && `・苦手 ${counts.weak}`}{counts.new > 0 && `・未学習 ${counts.new}`}</span>
+                    <span data-testid="ch-summary">覚えた {counts.mastered} / {c.itemIds.length} 問{counts.weak > 0 && `・苦手 ${counts.weak}`}{counts.new > 0 && `・未学習 ${counts.new}`}</span>
                   </div>
                 </div>
                 <div className="row">
