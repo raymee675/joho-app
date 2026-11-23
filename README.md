@@ -62,6 +62,8 @@ Leitner の復習間隔は段階0〜3で即時・1日・3日・7日。正解で1
 
 ```powershell
 npm run build
-node scripts/serve-dist.mjs 8094
-tailscale serve --bg --https=8445 http://127.0.0.1:8094
+node scripts/serve-dist.mjs 8095
+tailscale serve --bg --https=8446 http://127.0.0.1:8095
 ```
+
+ログオン時にタスク スケジューラの `joho-app-serve` が `serve-dist.mjs 8095` を起動します。配信先: `https://rumia675.taile72ab8.ts.net:8446/`（tailnet 内のみ）
