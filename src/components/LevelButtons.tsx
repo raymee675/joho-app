@@ -19,7 +19,7 @@ export default function LevelButtons({ counts, scope, query = '', title = 'æ®µéš
         {REVIEW_STATUSES.map((s) => {
           const body = <><i className={`dot st-${s}`} />{STATUS_LABEL[s]}<b>{counts[s]}</b></>;
           return counts[s] > 0
-            ? <Link key={s} className="btn sm" to={`/quiz/${levelSource(s, scope)}${query && `?${query}`}`} data-testid={`review-${s}`}>{body}</Link>
+            ? <Link key={s} className="btn sm" to={`/study/${levelSource(s, scope)}${query && `?${query}`}`} data-testid={`review-${s}`}>{body}</Link>
             : <button key={s} className="btn sm" disabled data-testid={`review-${s}`}>{body}</button>;
         })}
       </div>

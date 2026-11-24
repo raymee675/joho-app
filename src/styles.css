@@ -143,3 +143,5 @@ h1 .rank-label { margin-bottom:2px; }
 button,a,input { touch-action:manipulation; }
 :focus-visible { outline:3px solid #60a5fa; outline-offset:3px; }
 @media(max-width:380px) { .page { padding-inline:12px; } .legend { min-width:100px; font-size:12px; } .pie { gap:10px; } }
+
+.card-result { font-size:22px; text-align:center; font-weight:700; }

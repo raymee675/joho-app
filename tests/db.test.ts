@@ -1,4 +1,5 @@
 import { IDBFactory } from 'fake-indexeddb';
+import { openDB } from 'idb';
 import { recordAnswer, getProgress, getToday, getStreak, getSettings, setSettings, setKnown, dueItems, weakItems, resetDbConnection } from '../src/db';
 import { DAY_MS } from '../src/srs';
 
@@ -38,7 +39,7 @@ describe('db', () => {
     expect(await getStreak(now)).toBe(0);
   });
   it('設定の既定値と保存', async () => {
-    expect(await getSettings()).toEqual({ dailyGoal: 30, quizSeconds: 10, hideQuizChoices: false, hideCardAnswer: true });
+    expect(await getSettings()).toEqual({ dailyGoal: 30, hideCardAnswer: true });
     await setSettings({ dailyGoal: 50 });
     expect((await getSettings()).dailyGoal).toBe(50);
   });
@@ -48,5 +49,14 @@ describe('db', () => {
     await recordAnswer('a', false, now);
     expect((await dueItems(now)).map((p) => p.itemId)).toEqual(['a']);
     expect(await dueItems(now - 1)).toEqual([]);
+  });
+  it('旧4択設定が残っていてもカード設定を読み込める', async () => {
+    await getSettings();
+    const old = await openDB('joho-app', 2);
+    await old.put('settings', 10, 'quizSeconds');
+    await old.put('settings', true, 'hideQuizChoices');
+    await old.put('settings', false, 'hideCardAnswer');
+    old.close();
+    expect(await getSettings()).toEqual({ dailyGoal: 30, hideCardAnswer: false });
   });
 });

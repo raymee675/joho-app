@@ -16,9 +16,9 @@ export type LevelCounts = [number, number, number, number];
 export interface Day { date: string; answered: number; correct?: number; levels?: LevelCounts }
 /** ランク（章）のクリア記録 */
 export interface ChapterRecord { chapterId: string; clearedAt: number; best: number }
-export interface Settings { dailyGoal: number; quizSeconds: number; hideQuizChoices: boolean; hideCardAnswer: boolean }
+export interface Settings { dailyGoal: number; hideCardAnswer: boolean }
 
-const DEFAULT_SETTINGS: Settings = { dailyGoal: 30, quizSeconds: 10, hideQuizChoices: false, hideCardAnswer: true };
+const DEFAULT_SETTINGS: Settings = { dailyGoal: 30, hideCardAnswer: true };
 
 interface Schema extends DBSchema {
   progress: { key: string; value: Progress };
@@ -140,11 +140,11 @@ export async function getStreak(now = Date.now()): Promise<number> {
 export async function getSettings(): Promise<Settings> {
   const d = await db();
   const out = { ...DEFAULT_SETTINGS };
-  for (const k of ['dailyGoal', 'quizSeconds'] as const) {
+  for (const k of ['dailyGoal'] as const) {
     const v = await d.get('settings', k);
-    if (typeof v === 'number' && Number.isFinite(v)) out[k] = k === 'quizSeconds' ? Math.min(3600, Math.max(0, Math.round(v))) : Math.max(1, Math.round(v));
+    if (typeof v === 'number' && Number.isFinite(v)) out[k] = Math.max(1, Math.round(v));
   }
-  for (const k of ['hideQuizChoices', 'hideCardAnswer'] as const) {
+  for (const k of ['hideCardAnswer'] as const) {
     const v = await d.get('settings', k);
     if (typeof v === 'boolean') out[k] = v;
   }

@@ -1,16 +1,20 @@
 import { test, expect } from '@playwright/test';
-import { noTimer, runQuiz } from './helpers';
+import { runCards } from './helpers';
 test('ランク不合格・合格・次章と学習記録を保存', async ({ page }) => {
-  await noTimer(page);
+  await page.goto('/');
   await page.getByTestId('rank-test').click();
-  await runQuiz(page, [0, 1, 2]);
+  await runCards(page, [0, 1, 2]);
   await expect(page.getByTestId('rank-result')).toContainText('不合格');
-  await page.getByRole('link', { name: '章へ戻る' }).click();
+  await page.getByRole('link', { name: 'ホームへ' }).click();
   await expect(page.getByTestId('rank')).toContainText('クリア 0 /');
   await page.getByTestId('rank-test').click();
-  const total = await runQuiz(page);
+  const total = await runCards(page);
   await expect(page.getByTestId('rank-result')).toContainText('合格！ランク 1 クリア');
-  await page.getByRole('link', { name: '章へ戻る' }).click();
+  await expect(page.getByText(/自己申告によるもの/)).toBeVisible();
+  await expect(page.getByTestId('next-rank')).toBeVisible();
+  await page.getByTestId('next-rank').click();
+  await expect(page).toHaveURL(/chapter/);
+  await page.getByRole('link', { name: 'ホーム', exact: true }).click();
   await expect(page.getByTestId('rank')).toContainText('ランク 2');
   await page.reload();
   await expect(page.getByTestId('rank')).toContainText('クリア 1 /');

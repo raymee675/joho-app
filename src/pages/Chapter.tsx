@@ -21,7 +21,7 @@ export default function Chapter() {
 
   const items = ch.itemIds.map((id) => itemById.get(id)!).filter(Boolean);
   const counts = countStatuses(ch.itemIds, prog);
-  const quizOf = (src: string) => `/quiz/${src}`;
+  const studyOf = (src: string) => `/study/${src}`;
 
   return (
     <div className="page">
@@ -29,16 +29,15 @@ export default function Chapter() {
       <h1><small className="rank-label">ランク {rankNo(ch.id)}{rec && <span className="clear-badge">クリア</span>}</small>{ch.title}</h1>
       <section className="card overview">
         <h2>学習状況（{items.length} 問）</h2>
-        <StatusPie counts={counts} legend reviewHref={(s) => (REVIEW_STATUSES.includes(s) ? quizOf(levelSource(s, ch.id)) : null)} />
+        <StatusPie counts={counts} legend reviewHref={(s) => (REVIEW_STATUSES.includes(s) ? studyOf(levelSource(s, ch.id)) : null)} />
         <LevelButtons counts={counts} scope={ch.id} title="この章の段階ごとに出題" />
       </section>
-      <Link className="btn primary block" to={`/study/${ch.id}`}>カード学習</Link>
-      <Link className="btn block" to={`/quiz/${ch.id}?rankup=1`} data-testid="chapter-rank-test">
+      <Link className="btn primary block" to={`/study/${ch.id}`}>カードで学習</Link>
+      <Link className="btn block" to={`/study/${ch.id}?rankup=1`} data-testid="chapter-rank-test">
         ランクアップテスト（{passMark(Math.min(RANK_TEST_SIZE, items.length))}/{Math.min(RANK_TEST_SIZE, items.length)} で合格{rec ? `・最高 ${rec.best}` : ''}）
       </Link>
-      <Link className="btn block" to={quizOf(ch.id)}>4 択テスト</Link>
-      {items.length > 10 && <Link className="btn block" to={`/quiz/${ch.id}?n=all`}>4 択テスト（全問）</Link>}
-      {counts.new > 0 && <Link className="btn block" to={quizOf(levelSource('new', ch.id))}>未学習 {counts.new} 問題をテスト</Link>}
+      <Link className="btn block" to={`/study/${ch.id}?shuffle=1`}>シャッフル</Link>
+      {counts.new > 0 && <Link className="btn block" to={studyOf(levelSource('new', ch.id))}>未学習 {counts.new} 問題をカードで学習</Link>}
       <Link className="btn block" to={`/list?chapter=${ch.id}`}>問題の一覧</Link>
     </div>
   );

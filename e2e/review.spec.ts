@@ -1,21 +1,21 @@
 import { test, expect } from '@playwright/test';
-import { data, noTimer, runQuiz, visibleText } from './helpers';
-test('正解でも自信なしで苦手に入れ、一覧で解消する', async ({ page }) => {
-  await noTimer(page);
-  await page.getByRole('link', { name: '4 択テスト', exact: true }).first().click();
-  await runQuiz(page);
-  await page.locator('.result-row').first().getByRole('button', { name: '自信なし' }).click();
-  await expect(page.locator('.result-row').first().getByRole('button', { name: '自信なし' })).toHaveAttribute('aria-pressed', 'true');
-  await page.getByRole('link', { name: '章へ戻る' }).click();
+import { data, visibleText } from './helpers';
+test('カードの仕分けで苦手に入り、段階別復習と一覧で解消する', async ({ page }) => {
+  await page.goto('/#/study/' + data.chapters[0].id + '?n=1');
+  await page.getByRole('button', { name: 'わからなかった', exact: true }).click();
+  await expect(page.getByTestId('card-result')).toBeVisible();
+  await page.getByRole('link', { name: 'ホームへ' }).click();
   await expect(page.getByTestId('weak-count')).toHaveText('苦手の復習（1 問）');
   await page.getByTestId('overview').getByTestId('review-weak').click();
-  await expect(page.getByTestId('progress')).toHaveText('1 / 1');
+  await expect(page).toHaveURL(/study\/lv-weak/);
+  await expect(page.getByTestId('card-progress')).toContainText('1/1');
   await page.getByRole('link', { name: '問題一覧' }).click();
   await page.getByRole('group', { name: '定着度で絞り込む' }).getByRole('button', { name: '苦手', exact: true }).click();
   await expect(page.locator('.words li.card')).toHaveCount(1);
   await page.getByRole('button', { name: '苦手から外す' }).click();
   await expect(page.locator('.words li.card')).toHaveCount(0);
 });
+
 test('一覧は問題・解答・解説・定着度を表示し検索できる', async ({ page }) => {
   await page.goto('/#/list');
   await expect(page.locator('.words li.card')).toHaveCount(data.items.length);

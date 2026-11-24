@@ -56,7 +56,7 @@ export default function Home() {
       </section>
       <GoalBanner />
       {weak.length > 0
-        ? <Link className="btn primary block" to="/quiz/review" data-testid="weak-count">苦手の復習（{weak.length} 問）</Link>
+        ? <Link className="btn primary block" to="/study/review" data-testid="weak-count">苦手の復習（{weak.length} 問）</Link>
         : <button className="btn block" disabled data-testid="weak-count">苦手な問題はありません</button>}
       <section className="card rank-card" data-testid="rank">
         <div className="rank-top"><span>情報Iのランク</span><span>クリア {ranks.filter((c) => records.has(c.id)).length} / {ranks.length}</span></div>
@@ -67,19 +67,19 @@ export default function Home() {
             <p className="rank-note">
               {curCounts.new > 0
                 ? `① 未学習 ${curCounts.new} 問題をカードで仕分け → ② ランクアップテスト`
-                : `ランクアップテスト（${Math.min(RANK_TEST_SIZE, cur.itemIds.length)} 問中 ${passMark(Math.min(RANK_TEST_SIZE, cur.itemIds.length))} 問正解で次のランクへ）`}
+                : `ランクアップテスト（${Math.min(RANK_TEST_SIZE, cur.itemIds.length)} 問中 ${passMark(Math.min(RANK_TEST_SIZE, cur.itemIds.length))} 問「わかった」で次のランクへ）`}
             </p>
             {curCounts.new > 0 && <Link className="btn primary block" to={`/study/lv-new-${cur.id}`} data-testid="rank-study">未学習 {curCounts.new} 問題をカードで仕分け</Link>}
-            <Link className={`btn block${curCounts.new > 0 ? '' : ' primary'}`} to={`/quiz/${cur.id}?rankup=1`} data-testid="rank-test">ランクアップテスト</Link>
+            <Link className={`btn block${curCounts.new > 0 ? '' : ' primary'}`} to={`/study/${cur.id}?rankup=1`} data-testid="rank-test">ランクアップテスト</Link>
           </>
         ) : <h2 data-testid="rank-all-clear">すべてのランクをクリアしました 🎉</h2>}
       </section>
       <section className="card overview" data-testid="overview">
         <h2>情報I 全体の学習状況</h2>
-        <StatusPie counts={tabCounts} legend reviewHref={(s) => (REVIEW_STATUSES.includes(s) ? `/quiz/${levelSource(s, `all-${tab}`)}` : null)} />
+        <StatusPie counts={tabCounts} legend reviewHref={(s) => (REVIEW_STATUSES.includes(s) ? `/study/${levelSource(s, `all-${tab}`)}` : null)} />
         <LevelButtons counts={tabCounts} scope={`all-${tab}`} title={`情報I全体から段階ごとに出題`} />
       </section>
-      <Link className="btn block" to={`/quiz/all-${tab}`}>ランダム出題（全{tabIds.length}問）</Link>
+      <Link className="btn block" to={`/study/all-${tab}?shuffle=1&n=20`}>ランダム出題（全体から最大20枚）</Link>
       <ul className="chapters">
         {chapters.map((c, i) => {
           const counts = countStatuses(c.itemIds, prog);
@@ -95,9 +95,8 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="row">
-                  <Link className="btn" to={`/study/${c.id}`}>カード</Link>
-                  <Link className="btn primary" to={`/quiz/${c.id}`}>4 択テスト</Link>
-                  {c.itemIds.length > 10 && <Link className="btn" to={`/quiz/${c.id}?n=all`}>全問</Link>}
+                  <Link className="btn primary" to={`/study/${c.id}`}>カードで学習</Link>
+                  <Link className="btn" to={`/study/${c.id}?shuffle=1`}>シャッフル</Link>
                 </div>
               </li>
             </Fragment>

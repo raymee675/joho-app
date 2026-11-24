@@ -1,34 +1,39 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { getSettings, recordAnswer, setKnown } from '../db';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
+import { clearChapter, getSettings, recordAnswer, setKnown } from '../db';
 import FormattedText from '../components/FormattedText';
 import { loadSource } from '../source';
 import { isTap, judgeSwipe, labelOpacity } from '../swipe';
 import GoalBanner from '../components/GoalBanner';
-import { chapterOf } from '../rank';
+import { chapterOf, isPassed, nextRank, passMark, rankNo } from '../rank';
+import { selectCards } from '../cards';
 import type { Item } from '../types';
 
 const FLY_MS = 220;
 
 export default function Study() {
   const { chapterId = '' } = useParams();
-  const [loaded, setLoaded] = useState<{ chapterId: string; title: string; items: Item[] } | null>(null);
+  const [params] = useSearchParams();
+  const query = params.toString();
+  const session = `${chapterId}?${query}`;
+  const rankChapter = params.get('rankup') === '1' ? chapterOf(chapterId) : null;
+  const [loaded, setLoaded] = useState<{ session: string; title: string; items: Item[] } | null>(null);
   const [hideAnswer, setHideAnswer] = useState(true);
   useEffect(() => {
     let active = true;
-    Promise.all([loadSource(chapterId), getSettings()]).then(([source, settings]) => {
+    Promise.all([loadSource(rankChapter ?? chapterId), getSettings()]).then(([source, settings]) => {
       if (!active) return;
       setHideAnswer(settings.hideCardAnswer);
-      setLoaded({ ...source, chapterId });
+      setLoaded({ ...source, session });
     });
     return () => { active = false; };
-  }, [chapterId]);
-  if (!loaded || loaded.chapterId !== chapterId) return <div className="page" />;
-  return <Cards key={chapterId} chapterId={chapterId} title={loaded.title} first={loaded.items} hideAnswer={hideAnswer} />;
+  }, [chapterId, query, session, rankChapter]);
+  if (!loaded || loaded.session !== session) return <div className="page" />;
+  return <Cards key={session} chapterId={chapterId} title={loaded.title} source={loaded.items} query={query} hideAnswer={hideAnswer} rankChapter={rankChapter} />;
 }
 
-function Cards({ chapterId, title, first, hideAnswer }: { chapterId: string; title: string; first: Item[]; hideAnswer: boolean }) {
-  const [round, setRound] = useState({ items: first, n: 0 });
+function Cards({ chapterId, title, source, query, hideAnswer, rankChapter }: { chapterId: string; title: string; source: Item[]; query: string; hideAnswer: boolean; rankChapter: string | null }) {
+  const [round, setRound] = useState(() => ({ items: selectCards(source, new URLSearchParams(query), !!rankChapter), n: 0 }));
   const [i, setI] = useState(0);
   const [known, setKnownList] = useState<Item[]>([]);
   const [unknown, setUnknownList] = useState<Item[]>([]);
@@ -56,11 +61,12 @@ function Cards({ chapterId, title, first, hideAnswer }: { chapterId: string; tit
           <p>問題がありません。</p>
         ) : (
           <>
-            <p className="big" data-testid="card-result">覚えた {known.length} / まだ {unknown.length}</p>
+            <p className="card-result" data-testid="card-result">わかった {known.length} / わからなかった {unknown.length}</p>
+            {rankChapter && <RankResult chapterId={rankChapter} score={known.length} total={items.length} />}
             <GoalBanner />
-            {unknown.length > 0 && <button className="btn primary block" onClick={() => again(unknown)}>まだの問題だけもう一度</button>}
-            {chapterOf(chapterId) && <Link className="btn block" to={`/quiz/${chapterOf(chapterId)}?rankup=1`}>ランクアップテストへ</Link>}
-            <Link className="btn block" to={`/quiz/${chapterOf(chapterId) ?? chapterId}`}>この章を 4 択テスト</Link>
+            {!rankChapter && unknown.length > 0 && <button className="btn primary block" onClick={() => again(unknown)}>わからなかった問題だけもう一度</button>}
+            {!rankChapter && chapterOf(chapterId) && <Link className="btn block" to={`/study/${chapterOf(chapterId)}?rankup=1`}>ランクアップテストへ</Link>}
+            <button className="btn block" onClick={() => again(selectCards(source, new URLSearchParams(query), !!rankChapter))}>もう一度</button>
           </>
         )}
         <Link className="btn block" to="/">ホームへ</Link>
@@ -70,10 +76,28 @@ function Cards({ chapterId, title, first, hideAnswer }: { chapterId: string; tit
 
   return (
     <div className="page">
-      <header className="top"><Link to="/" aria-label="中断">‹ 戻る</Link><span data-testid="card-progress">{title}　{i + 1}/{items.length}</span></header>
+      <header className="top"><Link to="/" aria-label="中断">‹ 戻る</Link><span data-testid="card-progress">{rankChapter ? `ランク ${rankNo(rankChapter)} アップテスト` : title}　{i + 1}/{items.length}</span></header>
       <SwipeCard key={`${round.n}-${it.id}`} item={it} hideAnswer={hideAnswer} onVerdict={(k) => commit(it, k)} />
     </div>
   );
+}
+
+function RankResult({ chapterId, score, total }: { chapterId: string; score: number; total: number }) {
+  const passed = isPassed(score, total);
+  const next = nextRank(chapterId);
+  const [saved, setSaved] = useState(false);
+  useEffect(() => {
+    if (passed) void clearChapter(chapterId, score).then(() => setSaved(true));
+  }, [passed, chapterId, score]);
+  return <>
+    <p className="big" data-testid="score">{score} / {total}</p>
+    <p className={`rank-result ${passed ? 'ok' : 'ng'}`} data-testid="rank-result">{passed
+      ? `合格！ランク ${rankNo(chapterId)} クリア${next ? `。次は ランク ${rankNo(next.id)}「${next.title}」` : '。すべてのランクをクリアしました'}`
+      : `不合格… 合格は「わかった」が ${passMark(total)} 問以上。苦手を復習してもう一度`}</p>
+    <small className="center note">この結果は「わかった／わからなかった」の自己申告によるものです。</small>
+    {saved && next && <Link className="btn primary block" to={`/chapter/${next.id}`} data-testid="next-rank">次のランクへ</Link>}
+    {!passed && <Link className="btn primary block" to={`/study/weak-${chapterId}`}>この章の苦手を復習</Link>}
+  </>;
 }
 
 function SwipeCard({ item, hideAnswer, onVerdict }: { item: Item; hideAnswer: boolean; onVerdict: (known: boolean) => void }) {
@@ -147,19 +171,19 @@ function SwipeCard({ item, hideAnswer, onVerdict }: { item: Item; hideAnswer: bo
         onPointerUp={onUp}
         onPointerCancel={onCancel}
       >
-        <span className="stamp stamp-ok" style={{ opacity: shownDx > 0 ? labelOpacity(shownDx, w) : 0 }}>覚えた</span>
-        <span className="stamp stamp-ng" style={{ opacity: shownDx < 0 ? labelOpacity(shownDx, w) : 0 }}>まだ</span>
+        <span className="stamp stamp-ok" style={{ opacity: shownDx > 0 ? labelOpacity(shownDx, w) : 0 }}>わかった</span>
+        <span className="stamp stamp-ng" style={{ opacity: shownDx < 0 ? labelOpacity(shownDx, w) : 0 }}>わからなかった</span>
         <div className="word"><FormattedText text={item.question} /></div>
         {open ? (
           <div className="answer" data-testid="meaning">
             <p className="sense"><FormattedText text={item.answer} /></p>
             {item.explanation && <p className="note"><FormattedText text={item.explanation} /></p>}
           </div>
-        ) : <div className="hint">タップして解答を見る　←まだ　覚えた→</div>}
+        ) : <div className="hint">タップして解答・解説を見る<br />←わからなかった　わかった→</div>}
       </div>
       <div className="row">
-        <button className="btn" onClick={() => throwCard(false)}>まだ</button>
-        <button className="btn primary" onClick={() => throwCard(true)}>覚えた</button>
+        <button className="btn" onClick={() => throwCard(false)}>わからなかった</button>
+        <button className="btn primary" onClick={() => throwCard(true)}>わかった</button>
       </div>
     </>
   );

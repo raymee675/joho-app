@@ -36,12 +36,6 @@ export function shuffle<T>(arr: T[], rng: () => number = Math.random): T[] {
   return a;
 }
 
-/** 4択の選択肢（正解 + 同じプールから最大3つの誤答）を作る */
-export function makeChoices<T extends { id: string }>(answer: T, pool: T[], n = 4, rng: () => number = Math.random): T[] {
-  const others = shuffle(pool.filter((p) => p.id !== answer.id), rng).slice(0, n - 1);
-  return shuffle([answer, ...others], rng);
-}
-
 /** 苦手の語（一度は解いていて、定着度が「苦手」） */
 export function isWeak(p: { lastSeen: number; box: number }): boolean {
   return p.lastSeen > 0 && levelOf(p.box) === LEVEL_WEAK;
