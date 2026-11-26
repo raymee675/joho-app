@@ -17,7 +17,7 @@ E2E は Chromium の iPhone 13 相当の画面で実行します。スクリー�
 
 ## コンテンツ
 
-`content/` と `photos/` は著作物のため git 管理外です。入力画像や raw は生成スクリプトから変更しません。
+`photos/` と `content/raw/` は git 管理外です。GitHub Pages で全問を使えるよう、ビルド済みの `content/build/deck.json` だけはリポジトリに含めています（`npm run content` で作り直したら一緒にコミットする）。入力画像や raw は生成スクリプトから変更しません。
 
 ```json
 {

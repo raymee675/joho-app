@@ -1,6 +1,9 @@
 node_modules/
 dist/
-content/
+content/*
+!content/build/
+content/build/*
+!content/build/deck.json
 photos/
 .env
 e2e-results/
